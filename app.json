@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "expo-template-default",
+    "name": "Mybestbrands Mobile Shop",
+    "slug": "mybestbrands-mobile-shop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,13 +13,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ikik.mybestbrandsmobileshop"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ikik.mybestbrandsmobileshop"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +33,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f5416549-a235-4d80-a0c2-317ecf7c3018"
+      }
+    },
+    "owner": "ikik",
+    "updates": {
+      "url": "https://u.expo.dev/f5416549-a235-4d80-a0c2-317ecf7c3018"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
