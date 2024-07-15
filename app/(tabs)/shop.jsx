@@ -1,27 +1,32 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
+import Ionicons from '@expo/vector-icons/Ionicons'
 import {
-  StyleSheet, Image, Platform, SafeAreaView, View,
-  FlatList, StatusBar, Text
-} from 'react-native';
+  StyleSheet,
+  Image,
+  Platform,
+  SafeAreaView,
+  View,
+  FlatList,
+  StatusBar,
+  Text
+} from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ExternalLink } from '@/components/ExternalLink'
+import ParallaxScrollView from '@/components/ParallaxScrollView'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
 
-export default function TabTwoScreen() {
+export default function TabTwoScreen () {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    const dataSource = "https://api.jsonsilo.com/public/a597ee63-6f5a-4f5d-b70e-338b22e45ee0"
+    const dataSource =
+      'https://api.jsonsilo.com/public/a597ee63-6f5a-4f5d-b70e-338b22e45ee0'
 
     fetch(dataSource)
       .then(response => response.json())
       .then(data => addID(data))
-      .catch(error => console.error('Error:', error));
-    return () => {
-
-    };
+      .catch(error => console.error('Error:', error))
+    return () => {}
   }, [])
 
   let addID = data => {
@@ -34,9 +39,9 @@ export default function TabTwoScreen() {
 
   const Item = ({ title }) => (
     <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.itemTitle}>{title}</Text>
     </View>
-  );
+  )
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,9 +52,12 @@ export default function TabTwoScreen() {
             source={require('@/assets/images/logo.png')}
             style={styles.logo}
           />
-        }>
+        }
+      >
         <ThemedView>
-          <ThemedText type="title" style={styles.title}>PRODUCT LIST</ThemedText>
+          <ThemedText type='title' style={styles.title}>
+            PRODUCT LIST
+          </ThemedText>
         </ThemedView>
 
         {/* <FlatList
@@ -58,9 +66,9 @@ export default function TabTwoScreen() {
           keyExtractor={item => item.id}
         /> */}
 
-        {
-          data ? data.map((item) => <Item key={item.id} title={item.name} />) : null
-        }
+        {data
+          ? data.map(item => <Item key={item.id} title={item.name} />)
+          : null}
       </ParallaxScrollView>
     </SafeAreaView>
   )
@@ -75,17 +83,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   title: {
-    maxWidth: "100%",
-    textAlign: 'center',
+    maxWidth: '100%',
+    textAlign: 'center'
   },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    marginTop: StatusBar.currentHeight || 0
   },
   item: {
-    backgroundColor: '',
+    backgroundColor: '#54626F',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
   },
-});
+  itemTitle: {
+    color: '#fff'
+  }
+})
