@@ -1,14 +1,26 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
+import { Image, StyleSheet, Platform, Animated, Text, View } from 'react-native';
+import { router } from 'expo-router';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useRef, useEffect } from 'react'
 
 
 export default function HomeScreen() {
 
-  
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim])
+
+  setTimeout(function () {
+    router.replace('/shop');
+  }, 2000);
 
   return (
     <ParallaxScrollView
@@ -22,6 +34,15 @@ export default function HomeScreen() {
       <ThemedView>
         <ThemedText type="title" style={styles.title}>MYBESTBRANDS</ThemedText>
       </ThemedView>
+
+      <Animated.View // Special animatable View
+        style={{
+          opacity: fadeAnim,
+        }}>
+        <ThemedView>
+          <ThemedText type="subtitle">FIND WHAT YOU STAND FOR.</ThemedText>
+        </ThemedView>
+      </Animated.View>
     </ParallaxScrollView>
   );
 }
@@ -37,5 +58,5 @@ const styles = StyleSheet.create({
     width: 72,
     // position: 'absolute',
     alignSelf: 'center'
-  },
+  }
 });
