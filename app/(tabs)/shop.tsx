@@ -1,13 +1,27 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Image, Platform } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
+import React, { useState, useEffect, useContext } from 'react'
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function TabTwoScreen() {
+
+
+  useEffect(() => {
+    const dataSource = "https://api.jsonsilo.com/public/a597ee63-6f5a-4f5d-b70e-338b22e45ee0"
+
+    fetch(dataSource)
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+
+    return () => {
+
+    };
+  }, [])
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#fff', dark: '#fff' }}

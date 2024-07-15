@@ -1,6 +1,5 @@
 import { Image, StyleSheet, Platform } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -9,18 +8,7 @@ import React, { useState, useEffect, useContext } from 'react'
 
 export default function HomeScreen() {
 
-  useEffect(() => {
-    const dataSource = "https://api.jsonsilo.com/public/a597ee63-6f5a-4f5d-b70e-338b22e45ee0"
-
-    fetch(dataSource)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
-
-    return () => {
-
-    };
-  }, [])
+  
 
   return (
     <ParallaxScrollView
