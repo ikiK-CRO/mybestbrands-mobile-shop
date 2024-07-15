@@ -11,16 +11,19 @@ export default function HomeScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
+
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
-    }).start();
+    }).start()
+
+    setTimeout(function () {
+      router.replace('/shop');
+    }, 2000)
+
   }, [fadeAnim])
 
-  setTimeout(function () {
-    router.replace('/shop');
-  }, 2000);
 
   return (
     <ParallaxScrollView
