@@ -98,14 +98,22 @@ export default function TabTwoScreen () {
                 name='settings'
                 size={24}
                 color='white'
-                onPress={() => console.log(true)}
+                onPress={data =>
+                  router.navigate({
+                    pathname: 'modal'
+                  })
+                }
               />
             ) : (
               <Ionicons
                 name='settings'
                 size={24}
                 color='black'
-                onPress={() => console.log(true)}
+                onPress={data =>
+                  router.navigate({
+                    pathname: 'modal'
+                  })
+                }
               />
             )}
           </View>
@@ -194,5 +202,5 @@ const styles = StyleSheet.create({
     minHeight: 120,
     minWidth: 120
     // marginTop: 5
-  },
+  }
 })
