@@ -64,29 +64,29 @@ export default function TabTwoScreen () {
           />
         }
       >
-        <ThemedView>
-          <ThemedText type='title' style={styles.title}>
-            PRODUCT LIST{' '}
-            <View>
-              {colorScheme === 'dark' ? (
-                <Ionicons
-                  name='settings'
-                  size={24}
-                  color='white'
-                  onPress={() => console.log(true)}
-                  iconStyle={{ marginRight: 30 }}
-                />
-              ) : (
-                <Ionicons
-                  name='settings'
-                  size={24}
-                  color='black'
-                  onPress={() => console.log(true)}
-                  iconStyle={{ marginRight: 30 }}
-                />
-              )}
-            </View>
-          </ThemedText>
+        <ThemedView style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ flex: 2 }}>
+            <ThemedText type='title' style={styles.title}>
+              PRODUCT LIST
+            </ThemedText>
+          </View>
+          <View style={{lex: 6}}>
+            {colorScheme === 'dark' ? (
+              <Ionicons
+                name='settings'
+                size={24}
+                color='white'
+                onPress={() => console.log(true)}
+              />
+            ) : (
+              <Ionicons
+                name='settings'
+                size={24}
+                color='black'
+                onPress={() => console.log(true)}
+              />
+            )}
+          </View>
         </ThemedView>
         <ThemedView
           style={{
@@ -125,7 +125,7 @@ export default function TabTwoScreen () {
                         transition={1000}
                       />
                       <Text style={styles.itemTitle}>{item.name}</Text>
-                      <Text>
+                      <Text style={{paddingLeft: 5}}>
                         {formatPrice(item.price)} {'\u20AC'}
                       </Text>
                     </TouchableOpacity>
@@ -141,7 +141,7 @@ export default function TabTwoScreen () {
 
 const styles = StyleSheet.create({
   logo: {
-    marginTop: 40,
+    marginTop: 20,
     height: 96,
     width: 72,
     // position: 'absolute',
