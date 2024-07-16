@@ -1,4 +1,6 @@
 module.exports = {
   dataOrginal: '',
-  dataFilterd: false
+  dataFilterd: false,
+  datF: null,
+  type: null
 }

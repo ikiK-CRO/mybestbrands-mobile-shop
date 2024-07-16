@@ -20,6 +20,21 @@ export default function Modal () {
   const [genderFColor, setFGenderColor] = useState('')
   const [genderMColor, setMGenderColor] = useState('')
 
+  let toast = (color, text) => {
+    Toast.show(text, {
+      duration: 5000,
+      position: Toast.positions.TOP,
+      backgroundColor: color,
+      shadowColor: 'black',
+      containerStyle: {
+        marginTop: 80,
+        marginStart: '60%',
+        minWidth: 150,
+        minHeight: 40
+      }
+    })
+  }
+
   useEffect(() => {
     console.log(GLOBAL.dataOrginal)
     colorScheme === 'dark'
@@ -66,23 +81,35 @@ export default function Modal () {
   }
 
   const filterData = (type, statement, typeCategory) => {
-    // console.log(type)
-    // console.log(statement)
+    console.log(type)
+    console.log(statement)
     // console.log(typeCategory)
     // console.log(GLOBAL.dataOrginal)
-    GLOBAL.dataOrginal.forEach(prod => {
-      // console.log(prod.genders)
-    })
-
-    let res = GLOBAL.dataOrginal.map(element => {
-      return {
-        ...element,
-        subElements: element.genders.filter(
-          subElement => subElement.includes(type)
-        )
+    let arr = []
+    GLOBAL.dataOrginal.forEach(el => {
+      // console.log(el.genders)
+      if (el.genders.includes(typeCategory)) {
+        arr.push(el)
       }
     })
-    console.log(res)
+    // console.log(arr)
+    if (arr.length !== 0) {
+      GLOBAL.dataFilterd = true
+      GLOBAL.datF = arr
+      GLOBAL.type = {
+        typeCategory: typeCategory,
+        type: type
+      }
+      toast('green', 'Filter applied!')
+    } else {
+      toast('red', 'No results!')
+    }
+  }
+
+  const handleRefresh = () => {
+    GLOBAL.dataFilterd = false
+    GLOBAL.datF = null
+    toast('green', 'Filter reset')
   }
 
   return (
@@ -94,10 +121,20 @@ export default function Modal () {
       </ThemedText>
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-      <View>
+      <View style={{ flex: 1 }}>
         {/* <ThemedText type='title' style={styles.title}>
           FILTERS
         </ThemedText> */}
+        <TouchableOpacity
+          onPress={() => handleRefresh(true)}
+          style={{ alignSelf: 'center' }}
+        >
+          <FontAwesome
+            name='refresh'
+            size={50}
+            color={colorScheme === 'dark' ? 'white' : 'black'}
+          />
+        </TouchableOpacity>
         <ThemedView
           style={{
             marginTop: 50,

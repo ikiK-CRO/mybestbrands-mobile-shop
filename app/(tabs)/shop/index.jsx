@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
   useColorScheme
 } from 'react-native'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Image } from 'expo-image'
-import { router } from 'expo-router'
+import { router, useFocusEffect } from 'expo-router'
 import Toast from 'react-native-root-toast'
 import GLOBAL from '@/global.js'
 
@@ -50,16 +50,27 @@ export default function TabTwoScreen () {
         toast('red', 'Error fetching data!')
       })
     return () => {}
-  }, [GLOBAL])
+  }, [])
 
   let processData = data => {
     data.forEach((element, index) => {
       element.id = index + 1
     })
     setData(data)
-    GLOBAL.dataOrginal=data
+    GLOBAL.dataOrginal = data
     toast('green', 'Data fetched!')
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      GLOBAL.dataFilterd === true
+        ? setData(GLOBAL.datF)
+        : setData(GLOBAL.dataOrginal)
+      return () => {
+        // console.log('This route is now unfocused.')
+      }
+    }, [])
+  )
 
   const cardGap = 10
   const cardWidth = '48%'
@@ -101,7 +112,7 @@ export default function TabTwoScreen () {
               <Ionicons
                 name='settings'
                 size={24}
-                color='white'
+                color={GLOBAL.dataFilterd === true ? 'orange' : 'white'}
                 onPress={data =>
                   router.navigate({
                     pathname: 'modal'
@@ -112,7 +123,7 @@ export default function TabTwoScreen () {
               <Ionicons
                 name='settings'
                 size={24}
-                color='black'
+                color={GLOBAL.dataFilterd === true ? 'orange' : 'black'}
                 onPress={data =>
                   router.navigate({
                     pathname: 'modal'
