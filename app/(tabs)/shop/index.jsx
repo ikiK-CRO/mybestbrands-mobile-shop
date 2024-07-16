@@ -17,7 +17,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Image } from 'expo-image'
-import { router } from 'expo-router';
+import { router } from 'expo-router'
 
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
@@ -46,7 +46,14 @@ export default function TabTwoScreen () {
   const cardGap = 10
   const cardWidth = '48%'
 
-  const onPress = i => router.replace('shop/prodDetail')
+  // const onPress = i => router.replace('shop/prodDetail')
+  const onPressItem = item =>
+    router.replace({
+      pathname: 'shop/prodDetail',
+      params: {
+        obj: JSON.stringify(item)
+      }
+    })
 
   const formatPrice = price => {
     let arr = price.toString().split('')
@@ -119,7 +126,7 @@ export default function TabTwoScreen () {
                   >
                     <TouchableOpacity
                       style={styles.button}
-                      onPress={() => onPress(i)}
+                      onPress={() => onPressItem(item)}
                     >
                       <Image
                         style={styles.image}

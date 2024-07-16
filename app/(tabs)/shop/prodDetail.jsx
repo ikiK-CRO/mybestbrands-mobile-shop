@@ -1,18 +1,13 @@
-import { Image, StyleSheet, Platform, Animated, Text, View } from 'react-native';
-import { router } from 'expo-router';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Image, StyleSheet, Platform, Animated, Text, View } from 'react-native'
+import { router, useLocalSearchParams } from 'expo-router'
+import ParallaxScrollView from '@/components/ParallaxScrollView'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
 import React, { useRef, useEffect } from 'react'
 
-
-export default function prodDetail() {
-
-
-  useEffect(() => {
-
-
-  }, [])
+export default function prodDetail () {
+  const {obj} = useLocalSearchParams();
+  console.log(JSON.parse(obj))
 
 
   return (
@@ -23,19 +18,21 @@ export default function prodDetail() {
           source={require('@/assets/images/logo.png')}
           style={styles.logo}
         />
-      }>
+      }
+    >
       <ThemedView>
-        <ThemedText type="title" style={styles.title}>prodDetail</ThemedText>
+        <ThemedText type='title' style={styles.title}>
+          DETAILS
+        </ThemedText>
       </ThemedView>
-
     </ParallaxScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   title: {
-    maxWidth: "100%",
-    textAlign: 'center',
+    maxWidth: '100%',
+    textAlign: 'center'
   },
   logo: {
     marginTop: 40,
@@ -44,4 +41,4 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     alignSelf: 'center'
   }
-});
+})
