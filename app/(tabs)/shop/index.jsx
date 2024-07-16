@@ -17,6 +17,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Image } from 'expo-image'
+import { router } from 'expo-router';
 
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
@@ -45,7 +46,8 @@ export default function TabTwoScreen () {
   const cardGap = 10
   const cardWidth = '48%'
 
-  const onPress = i => console.log(data[i])
+  const onPress = i => router.replace('shop/prodDetail')
+
   const formatPrice = price => {
     let arr = price.toString().split('')
     arr.splice(-2, 0, ',')
@@ -70,7 +72,8 @@ export default function TabTwoScreen () {
               PRODUCT LIST
             </ThemedText>
           </View>
-          <View style={{lex: 6}}>
+
+          <View style={{ lex: 6 }}>
             {colorScheme === 'dark' ? (
               <Ionicons
                 name='settings'
@@ -88,6 +91,7 @@ export default function TabTwoScreen () {
             )}
           </View>
         </ThemedView>
+
         <ThemedView
           style={{
             flexDirection: 'row',
@@ -125,7 +129,7 @@ export default function TabTwoScreen () {
                         transition={1000}
                       />
                       <Text style={styles.itemTitle}>{item.name}</Text>
-                      <Text style={{paddingLeft: 5}}>
+                      <Text style={{ paddingLeft: 5 }}>
                         {formatPrice(item.price)} {'\u20AC'}
                       </Text>
                     </TouchableOpacity>

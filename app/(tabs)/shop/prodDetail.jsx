@@ -6,23 +6,13 @@ import { ThemedView } from '@/components/ThemedView';
 import React, { useRef, useEffect } from 'react'
 
 
-export default function HomeScreen() {
+export default function prodDetail() {
 
-  const fadeAnim = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
 
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start()
 
-    setTimeout(function () {
-      router.replace('/shop/');
-    }, 2000)
-
-  }, [fadeAnim])
+  }, [])
 
 
   return (
@@ -35,17 +25,9 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView>
-        <ThemedText type="title" style={styles.title}>MYBESTBRANDS</ThemedText>
+        <ThemedText type="title" style={styles.title}>prodDetail</ThemedText>
       </ThemedView>
 
-      <Animated.View // Special animatable View
-        style={{
-          opacity: fadeAnim,
-        }}>
-        <ThemedView>
-          <ThemedText type="subtitle">FIND WHAT YOU STAND FOR.</ThemedText>
-        </ThemedView>
-      </Animated.View>
     </ParallaxScrollView>
   );
 }

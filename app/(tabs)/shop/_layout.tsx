@@ -1,11 +1,12 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { useSegments } from 'expo-router';
+import { useSegments } from 'expo-router'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-export default function TabLayout() {
+export default function TabLayout2() {
   const colorScheme = useColorScheme();
   const segment = useSegments();
   console.log(segment)
@@ -19,20 +20,20 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarStyle: { display: segment[2] === "prodDetail" ? 'none' : 'flex' },
-          title: 'HOME',
+          tabBarStyle: { display: segment[2] === "prodDetail" ? 'flex' : 'none' },
+          title: 'SHOP',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="shop"
+        name="prodDetail"
         options={{
-          tabBarStyle: { display: segment[2] === "prodDetail" ? 'none' : 'flex' },
-          title: 'SHOP',
+          tabBarStyle: { display: segment[2] === "prodDetail" ? 'flex' : 'none' },
+          title: 'DETAILS',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
+            <FontAwesome5 name={focused ? 'cart-arrow-down' : 'cart-arrow-down'} size={22} color={color} />
           ),
         }}
       />
