@@ -1,22 +1,26 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import {
   StyleSheet,
-  Image,
   Platform,
   SafeAreaView,
   View,
   FlatList,
   StatusBar,
-  Text
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  useColorScheme
 } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 import { ExternalLink } from '@/components/ExternalLink'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
+import { Image } from 'expo-image'
 
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
+  let colorScheme = useColorScheme()
 
   useEffect(() => {
     const dataSource =
@@ -37,11 +41,17 @@ export default function TabTwoScreen () {
     // console.log(data)
   }
 
-  const Item = ({ title }) => (
-    <View style={styles.item}>
-      <Text style={styles.itemTitle}>{title}</Text>
-    </View>
-  )
+  // console.log(Dimensions.get('window').width)
+  const cardGap = 10
+  const cardWidth = '48%'
+
+  const onPress = i => console.log(data[i])
+  const formatPrice = price => {
+    let arr = price.toString().split('')
+    arr.splice(-2, 0, ',')
+    // console.log(arr)
+    return arr.join('')
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,19 +66,74 @@ export default function TabTwoScreen () {
       >
         <ThemedView>
           <ThemedText type='title' style={styles.title}>
-            PRODUCT LIST
+            PRODUCT LIST{' '}
+            <View>
+              {colorScheme === 'dark' ? (
+                <Ionicons
+                  name='settings'
+                  size={24}
+                  color='white'
+                  onPress={() => console.log(true)}
+                  iconStyle={{ marginRight: 30 }}
+                />
+              ) : (
+                <Ionicons
+                  name='settings'
+                  size={24}
+                  color='black'
+                  onPress={() => console.log(true)}
+                  iconStyle={{ marginRight: 30 }}
+                />
+              )}
+            </View>
           </ThemedText>
         </ThemedView>
-
-        {/* <FlatList
-          data={data}
-          renderItem={({ item }) => <Item title={item.name} />}
-          keyExtractor={item => item.id}
-        /> */}
-
-        {data
-          ? data.map(item => <Item key={item.id} title={item.name} />)
-          : null}
+        <ThemedView
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}
+        >
+          {data
+            ? data.map((item, i) => {
+                return (
+                  <View
+                    key={item.id}
+                    style={{
+                      marginTop: cardGap,
+                      marginLeft: i % 2 !== 0 ? cardGap : 0,
+                      width: cardWidth,
+                      height: 220,
+                      backgroundColor: 'white',
+                      borderRadius: 12,
+                      shadowOpacity: 0.2,
+                      elevation: 2,
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => onPress(i)}
+                    >
+                      <Image
+                        style={styles.image}
+                        source={item.mainImageUrl}
+                        placeholder={require('@/assets/images/logo.png')}
+                        contentFit='cover'
+                        transition={1000}
+                      />
+                      <Text style={styles.itemTitle}>{item.name}</Text>
+                      <Text>
+                        {formatPrice(item.price)} {'\u20AC'}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )
+              })
+            : null}
+        </ThemedView>
       </ParallaxScrollView>
     </SafeAreaView>
   )
@@ -91,12 +156,20 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0
   },
   item: {
-    backgroundColor: '#54626F',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    // backgroundColor: '#54626F',
+    // padding: 10,
+    // marginVertical: 5,
+    // marginHorizontal: 7
   },
   itemTitle: {
-    color: '#fff'
+    color: '#000',
+    margin: 5,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  image: {
+    minHeight: 120,
+    minWidth: 120
+    // marginTop: 5
   }
 })
