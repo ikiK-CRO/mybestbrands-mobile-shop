@@ -15,6 +15,7 @@ import { ThemedView } from '@/components/ThemedView'
 import { Image } from 'expo-image'
 import { router } from 'expo-router'
 import Toast from 'react-native-root-toast'
+import GLOBAL from '@/global.js'
 
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
@@ -36,6 +37,8 @@ export default function TabTwoScreen () {
   }
 
   useEffect(() => {
+    console.log(GLOBAL)
+
     const dataSource =
       'https://api.jsonsilo.com/public/a597ee63-6f5a-4f5d-b70e-338b22e45ee0'
 
@@ -54,6 +57,7 @@ export default function TabTwoScreen () {
       element.id = index + 1
     })
     setData(data)
+    GLOBAL.dataOrginal=data
     toast('green', 'Data fetched!')
   }
 
