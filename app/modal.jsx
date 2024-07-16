@@ -15,14 +15,13 @@ import React, { useState, useEffect } from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import Toast from 'react-native-root-toast'
 
-
 export default function Modal () {
   let colorScheme = useColorScheme()
   const [genderFColor, setFGenderColor] = useState('')
   const [genderMColor, setMGenderColor] = useState('')
 
   useEffect(() => {
-    // console.log(GLOBAL.dataOrginal)
+    console.log(GLOBAL.dataOrginal)
     colorScheme === 'dark'
       ? (setFGenderColor('white'), setMGenderColor('white'))
       : (setFGenderColor('black'), setMGenderColor('black'))
@@ -40,6 +39,9 @@ export default function Modal () {
       colorScheme === 'dark'
         ? setMGenderColor('white')
         : setMGenderColor('black')
+
+      filterData('gender', true, 'female')
+
       return
     } else {
       colorScheme === 'dark'
@@ -52,6 +54,9 @@ export default function Modal () {
       colorScheme === 'dark'
         ? setFGenderColor('white')
         : setFGenderColor('black')
+
+      filterData('gender', true, 'male')
+
       return
     } else {
       colorScheme === 'dark'
@@ -60,36 +65,58 @@ export default function Modal () {
     }
   }
 
+  const filterData = (type, statement, typeCategory) => {
+    // console.log(type)
+    // console.log(statement)
+    // console.log(typeCategory)
+    // console.log(GLOBAL.dataOrginal)
+    GLOBAL.dataOrginal.forEach(prod => {
+      // console.log(prod.genders)
+    })
+
+    let res = GLOBAL.dataOrginal.map(element => {
+      return {
+        ...element,
+        subElements: element.genders.filter(
+          subElement => subElement.includes(type)
+        )
+      }
+    })
+    console.log(res)
+  }
+
   return (
     <ThemedView
       style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
     >
-      <ThemedText>
+      <ThemedText type='title' style={styles.title}>
         {!isPresented && <Link href='../shop'>Dismiss</Link>}
       </ThemedText>
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
       <View>
-        <ThemedText type='title' style={styles.title}>
+        {/* <ThemedText type='title' style={styles.title}>
           FILTERS
-        </ThemedText>
+        </ThemedText> */}
         <ThemedView
           style={{
+            marginTop: 50,
             flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'row'
+            flexDirection: 'row',
+            width: '100%',
+            hight: '100%',
+            alignContent: 'center'
           }}
         >
-          <ThemedView style={{ flex: 3 }}>
+          <ThemedView style={{ flex: 1, alignItems: 'center' }}>
             <TouchableOpacity onPress={() => handleGender('female')}>
-              <FontAwesome name='female' size={50} color={genderFColor} />
+              <FontAwesome name='female' size={60} color={genderFColor} />
             </TouchableOpacity>
           </ThemedView>
 
-          <ThemedView style={{ flex: 3 }}>
+          <ThemedView style={{ flex: 1, alignItems: 'center' }}>
             <TouchableOpacity onPress={() => handleGender('male')}>
-              <FontAwesome name='male' size={50} color={genderMColor} />
+              <FontAwesome name='male' size={60} color={genderMColor} />
             </TouchableOpacity>
           </ThemedView>
         </ThemedView>

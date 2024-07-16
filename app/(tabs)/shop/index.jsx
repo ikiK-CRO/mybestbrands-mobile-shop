@@ -50,7 +50,7 @@ export default function TabTwoScreen () {
         toast('red', 'Error fetching data!')
       })
     return () => {}
-  }, [])
+  }, [GLOBAL])
 
   let processData = data => {
     data.forEach((element, index) => {
