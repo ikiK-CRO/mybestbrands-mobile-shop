@@ -9,7 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 export default function TabLayout2() {
   const colorScheme = useColorScheme();
   const segment = useSegments();
-  console.log(segment)
+  // console.log(segment)
 
   return (
     <Tabs
@@ -21,7 +21,7 @@ export default function TabLayout2() {
         name="index"
         options={{
           tabBarStyle: { display: segment[2] === "prodDetail" ? 'flex' : 'none' },
-          title: 'SHOP',
+          title: 'BACK',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
           ),

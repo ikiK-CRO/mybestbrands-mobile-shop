@@ -14,13 +14,13 @@ export default function HomeScreen() {
 
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 2000,
+      duration: 2300,
       useNativeDriver: true,
     }).start()
 
     setTimeout(function () {
       router.replace('/shop/');
-    }, 2000)
+    }, 2500)
 
   }, [fadeAnim])
 

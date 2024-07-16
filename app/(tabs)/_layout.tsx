@@ -8,7 +8,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const segment = useSegments();
-  console.log(segment)
+  // console.log(segment)
 
   return (
     <Tabs
