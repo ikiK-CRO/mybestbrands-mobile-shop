@@ -9,6 +9,7 @@ export default function prodDetail () {
   const {obj} = useLocalSearchParams();
   console.log(JSON.parse(obj))
 
+  
 
   return (
     <ParallaxScrollView

@@ -1,27 +1,39 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import {
   StyleSheet,
-  Platform,
   SafeAreaView,
   View,
-  FlatList,
   StatusBar,
   Text,
-  Dimensions,
   TouchableOpacity,
   useColorScheme
 } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
-import { ExternalLink } from '@/components/ExternalLink'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Image } from 'expo-image'
 import { router } from 'expo-router'
+import Toast from 'react-native-root-toast'
 
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
   let colorScheme = useColorScheme()
+
+  let toast = (color, text) => {
+    Toast.show(text, {
+      duration: 5000,
+      position: Toast.positions.TOP,
+      backgroundColor: color,
+      shadowColor: 'black',
+      containerStyle: {
+        marginTop: 20,
+        marginStart: '60%',
+        minWidth: 150,
+        minHeight: 40
+      }
+    })
+  }
 
   useEffect(() => {
     const dataSource =
@@ -29,24 +41,25 @@ export default function TabTwoScreen () {
 
     fetch(dataSource)
       .then(response => response.json())
-      .then(data => addID(data))
-      .catch(error => console.error('Error:', error))
+      .then(data => processData(data))
+      .catch(error => {
+        console.error('Error:', error)
+        toast('red', 'Error fetching data!')
+      })
     return () => {}
   }, [])
 
-  let addID = data => {
+  let processData = data => {
     data.forEach((element, index) => {
       element.id = index + 1
     })
     setData(data)
-    // console.log(data)
+    toast('green', 'Data fetched!')
   }
 
-  // console.log(Dimensions.get('window').width)
   const cardGap = 10
   const cardWidth = '48%'
 
-  // const onPress = i => router.replace('shop/prodDetail')
   const onPressItem = item =>
     router.replace({
       pathname: 'shop/prodDetail',
@@ -58,7 +71,6 @@ export default function TabTwoScreen () {
   const formatPrice = price => {
     let arr = price.toString().split('')
     arr.splice(-2, 0, ',')
-    // console.log(arr)
     return arr.join('')
   }
 
@@ -182,5 +194,5 @@ const styles = StyleSheet.create({
     minHeight: 120,
     minWidth: 120
     // marginTop: 5
-  }
+  },
 })
