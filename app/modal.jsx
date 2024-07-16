@@ -13,6 +13,8 @@ import { ThemedText } from '@/components/ThemedText'
 import GLOBAL from '@/global.js'
 import React, { useState, useEffect } from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
+import Toast from 'react-native-root-toast'
+
 
 export default function Modal () {
   let colorScheme = useColorScheme()
