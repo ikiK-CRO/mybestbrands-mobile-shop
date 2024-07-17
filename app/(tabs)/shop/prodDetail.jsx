@@ -14,8 +14,9 @@ import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import React, { useEffect, useState, useCallback } from 'react'
 import { Image } from 'expo-image'
-import AntDesign from '@expo/vector-icons/AntDesign'
+import Octicons from '@expo/vector-icons/Octicons'
 import GLOBAL from '@/global.js'
+import { ButtonGroup } from '@rneui/themed'
 
 export default function prodDetail () {
   const { obj } = useLocalSearchParams()
@@ -25,6 +26,8 @@ export default function prodDetail () {
   const [prod, setProd] = useState('')
   const [price, setPrice] = useState('')
   const [like, setLike] = useState()
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  // const [selectedIndexes, setSelectedIndexes] = useState([])
 
   useEffect(() => {
     console.log(JSON.parse(obj))
@@ -38,7 +41,7 @@ export default function prodDetail () {
 
   useFocusEffect(
     useCallback(() => {
-      console.log(product.id)
+      // console.log(product.id)
       if (GLOBAL.likes.includes(product.id)) {
         console.log(GLOBAL.likes)
         setLike('orange')
@@ -59,7 +62,7 @@ export default function prodDetail () {
   }
 
   const likeFunc = id => {
-    console.log(id)
+    // console.log(id)
     if (GLOBAL.likes.includes(id)) {
       GLOBAL.likes = GLOBAL.likes.filter(item => item !== id)
       setLike(colorScheme === 'dark' ? 'white' : 'black')
@@ -97,10 +100,10 @@ export default function prodDetail () {
           <Text style={{ fontWeight: 'bold' }}>Price: </Text>
           {price} {'\u20AC'}
         </ThemedText>
-        <AntDesign
-          onPress={() => likeFunc(prod.id)}
-          name='hearto'
+        <Octicons
+          name='heart-fill'
           size={24}
+          onPress={() => likeFunc(prod.id)}
           color={like}
           style={{ textAlign: 'right', marginLeft: 'auto' }}
         />
@@ -109,6 +112,21 @@ export default function prodDetail () {
         <Text style={{ fontWeight: 'bold' }}>Brand: </Text>
         {prod.brandName ? prod.brandName : null}
       </ThemedText>
+      <View>
+        <ThemedText style={{ fontWeight: 'bold' }}>SIZES: </ThemedText>
+        <ButtonGroup
+          buttons={prod ? prod.sizes.map(x => x.name) : null}
+          selectedIndex={selectedIndex}
+          onPress={value => {
+            setSelectedIndex(value)
+          }}
+          containerStyle={{ marginBottom: 20 }}
+          selectedButtonStyle={{
+            // backgroundColor: 'orange',
+            color: 'black'
+          }}
+        />
+      </View>
       <View
         style={{
           flex: 1,
