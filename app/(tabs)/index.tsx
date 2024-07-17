@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Platform, Animated, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -11,7 +11,6 @@ export default function HomeScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
-
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2300,
@@ -41,6 +40,10 @@ export default function HomeScreen() {
       <Animated.View // Special animatable View
         style={{
           opacity: fadeAnim,
+          width: "100%",
+          height: "100%",
+          justifyContent: 'center',
+          alignItems: 'center'
         }}>
         <ThemedView>
           <ThemedText type="subtitle">FIND WHAT YOU STAND FOR.</ThemedText>
