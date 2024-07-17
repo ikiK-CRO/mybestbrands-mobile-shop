@@ -14,6 +14,7 @@ import GLOBAL from '@/global.js'
 import React, { useState, useEffect, useCallback } from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import Toast from 'react-native-root-toast'
+import { Divider } from '@rneui/themed'
 
 export default function Modal () {
   let colorScheme = useColorScheme()
@@ -36,7 +37,6 @@ export default function Modal () {
   }
 
   useEffect(() => {
-    console.log(GLOBAL.dataOrginal)
     colorScheme === 'dark'
       ? (setFGenderColor('white'), setMGenderColor('white'))
       : (setFGenderColor('black'), setMGenderColor('black'))
@@ -60,11 +60,8 @@ export default function Modal () {
   )
 
   const isPresented = router.canGoBack()
-  // console.log(isPresented)
 
   const handleGender = type => {
-    // console.log(type)
-
     if (type === 'female' && genderFColor !== 'orange') {
       GLOBAL.filter = type
       setFGenderColor('orange')
@@ -99,18 +96,13 @@ export default function Modal () {
   }
 
   const filterData = (type, statement, typeCategory) => {
-    console.log(type)
-    console.log(statement)
-    // console.log(typeCategory)
-    // console.log(GLOBAL.dataOrginal)
     let arr = []
     GLOBAL.dataOrginal.forEach(el => {
-      // console.log(el.genders)
       if (el.genders.includes(typeCategory)) {
         arr.push(el)
       }
     })
-    // console.log(arr)
+
     if (arr.length !== 0) {
       GLOBAL.dataFilterd = true
       GLOBAL.datF = arr
@@ -146,12 +138,9 @@ export default function Modal () {
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
       <View style={{ flex: 1 }}>
-        {/* <ThemedText type='title' style={styles.title}>
-          FILTERS
-        </ThemedText> */}
         <TouchableOpacity
           onPress={() => handleRefresh(true)}
-          style={{ alignSelf: 'center' }}
+          style={{ alignSelf: 'center', marginBottom: 30 }}
         >
           <FontAwesome
             name='refresh'
@@ -159,6 +148,7 @@ export default function Modal () {
             color={colorScheme === 'dark' ? 'white' : 'black'}
           />
         </TouchableOpacity>
+        <Divider width={1} color={colorScheme === 'dark' ? 'white' : 'black'} />
         <ThemedView
           style={{
             marginTop: 50,
@@ -181,6 +171,7 @@ export default function Modal () {
             </TouchableOpacity>
           </ThemedView>
         </ThemedView>
+        <Divider width={1} color={colorScheme === 'dark' ? 'white' : 'black'} />
       </View>
     </ThemedView>
   )
@@ -189,6 +180,7 @@ export default function Modal () {
 const styles = StyleSheet.create({
   title: {
     maxWidth: '100%',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 30
   }
 })

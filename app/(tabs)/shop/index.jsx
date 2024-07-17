@@ -61,7 +61,7 @@ export default function TabTwoScreen () {
     })
     setData(data)
     GLOBAL.dataOrginal = data
-    toast('green', 'Data fetched!')
+    // toast('green', 'Data fetched!')
     setSpinner('none')
   }
 
