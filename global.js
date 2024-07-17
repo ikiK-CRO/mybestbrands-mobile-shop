@@ -2,5 +2,6 @@ module.exports = {
   dataOrginal: '',
   dataFilterd: false,
   datF: null,
-  type: null
+  type: null,
+  filter: null
 }

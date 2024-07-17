@@ -5,13 +5,13 @@ import {
   useColorScheme,
   TouchableOpacity
 } from 'react-native'
-import { Link, router } from 'expo-router'
+import { Link, router, useFocusEffect } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from 'expo-router'
 import { ThemedView } from '@/components/ThemedView'
 import { ThemedText } from '@/components/ThemedText'
 import GLOBAL from '@/global.js'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import Toast from 'react-native-root-toast'
 
@@ -40,8 +40,24 @@ export default function Modal () {
     colorScheme === 'dark'
       ? (setFGenderColor('white'), setMGenderColor('white'))
       : (setFGenderColor('black'), setMGenderColor('black'))
+
     return () => {}
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      if (GLOBAL.filter == 'male') {
+        setMGenderColor('orange')
+      }
+      if (GLOBAL.filter == 'female') {
+        setFGenderColor('orange')
+      }
+
+      return () => {
+        // console.log('This route is now unfocused.')
+      }
+    }, [])
+  )
 
   const isPresented = router.canGoBack()
   // console.log(isPresented)
@@ -50,6 +66,7 @@ export default function Modal () {
     // console.log(type)
 
     if (type === 'female' && genderFColor !== 'orange') {
+      GLOBAL.filter = type
       setFGenderColor('orange')
       colorScheme === 'dark'
         ? setMGenderColor('white')
@@ -65,6 +82,7 @@ export default function Modal () {
     }
 
     if (type === 'male' && genderMColor !== 'orange') {
+      GLOBAL.filter = type
       setMGenderColor('orange')
       colorScheme === 'dark'
         ? setFGenderColor('white')
@@ -109,6 +127,12 @@ export default function Modal () {
   const handleRefresh = () => {
     GLOBAL.dataFilterd = false
     GLOBAL.datF = null
+    colorScheme === 'dark' ? setMGenderColor('white') : setMGenderColor('black')
+    colorScheme === 'dark' ? setFGenderColor('white') : setFGenderColor('black')
+    GLOBAL.dataFilterd = false
+    GLOBAL.datF = null
+    GLOBAL.type = null
+    GLOBAL.filter = null
     toast('green', 'Filter reset')
   }
 
