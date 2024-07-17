@@ -6,7 +6,8 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
-  useColorScheme
+  useColorScheme,
+  ActivityIndicator
 } from 'react-native'
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -20,6 +21,7 @@ import GLOBAL from '@/global.js'
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
   let colorScheme = useColorScheme()
+  const [spinner, setSpinner] = useState("none")
 
   let toast = (color, text) => {
     Toast.show(text, {
@@ -37,6 +39,7 @@ export default function TabTwoScreen () {
   }
 
   useEffect(() => {
+    setSpinner("flex")
     console.log(GLOBAL)
 
     const dataSource =
@@ -59,6 +62,7 @@ export default function TabTwoScreen () {
     setData(data)
     GLOBAL.dataOrginal = data
     toast('green', 'Data fetched!')
+    setSpinner("none")
   }
 
   useFocusEffect(
@@ -181,6 +185,21 @@ export default function TabTwoScreen () {
             : null}
         </ThemedView>
       </ParallaxScrollView>
+      <ThemedView
+        style={{
+          display: spinner,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.95)'
+        }}
+      >
+        <ActivityIndicator size='large' color={colorScheme === 'dark' ? "white" : "white"} />
+      </ThemedView>
     </SafeAreaView>
   )
 }

@@ -79,11 +79,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   image: {
-    minHeight: 250,
-    minWidth: 250,
+    minHeight: 300,
+    minWidth: 300,
     flex: 1,
-    width: '100%',
-    height: '100%'
+    width: '95%',
+    height: '95%',
+    backgroundColor: "#fff",
+    padding: 20,
+    margin: 20
   },
   cont: {
     container: {
