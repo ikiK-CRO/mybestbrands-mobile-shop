@@ -3,13 +3,35 @@ import { router, useLocalSearchParams } from 'expo-router'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
-import React, { useRef, useEffect } from 'react'
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useFocusEffect,
+  useCallback
+} from 'react'
 
 export default function prodDetail () {
-  const {obj} = useLocalSearchParams();
-  console.log(JSON.parse(obj))
+  const { obj } = useLocalSearchParams()
+  const [prod, setProd] = useState('')
+  // console.log(JSON.parse(obj))
+  const product = JSON.parse(obj)
 
-  
+  useEffect(() => {
+    setProd(product)
+    return () => {
+      setProd('')
+    }
+  }, [obj])
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setProd(product)
+  //     return () => {
+  //       setProd('')
+  //     }
+  //   }, [product])
+  // )
 
   return (
     <ParallaxScrollView
@@ -23,7 +45,7 @@ export default function prodDetail () {
     >
       <ThemedView>
         <ThemedText type='title' style={styles.title}>
-          DETAILS
+          {prod.name ? prod.name : null}
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>

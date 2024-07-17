@@ -5,6 +5,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function TabLayout2() {
   const colorScheme = useColorScheme();
@@ -23,7 +24,7 @@ export default function TabLayout2() {
           tabBarStyle: { display: segment[2] === "prodDetail" ? 'flex' : 'none' },
           title: 'BACK',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
+            <AntDesign name="back" color={color} size={24} />
           ),
         }}
       />
