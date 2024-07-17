@@ -3,5 +3,6 @@ module.exports = {
   dataFilterd: false,
   datF: null,
   type: null,
-  filter: null
+  filter: null,
+  likes: []
 }

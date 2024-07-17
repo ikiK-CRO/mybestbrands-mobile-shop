@@ -5,36 +5,68 @@ import {
   Text,
   View,
   Dimensions,
-  Modal
+  Modal,
+  useColorScheme
 } from 'react-native'
-import { router, useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams, useFocusEffect } from 'expo-router'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Image } from 'expo-image'
+import AntDesign from '@expo/vector-icons/AntDesign'
+import GLOBAL from '@/global.js'
 
 export default function prodDetail () {
   const { obj } = useLocalSearchParams()
   const product = JSON.parse(obj)
+  let colorScheme = useColorScheme()
 
   const [prod, setProd] = useState('')
   const [price, setPrice] = useState('')
+  const [like, setLike] = useState()
 
   useEffect(() => {
     console.log(JSON.parse(obj))
     setProd(product)
     formatPrice(product.price)
+
     return () => {
       setProd('')
     }
   }, [obj])
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log(product.id)
+      if (GLOBAL.likes.includes(product.id)) {
+        console.log(GLOBAL.likes)
+        setLike('orange')
+      } else {
+        setLike(colorScheme === 'dark' ? 'white' : 'black')
+      }
+      return () => {
+        // console.log('This route is now unfocused.')
+      }
+    }, [product])
+  )
 
   const formatPrice = price => {
     let arr = price.toString().split('')
     arr.splice(-2, 0, ',')
     setPrice(arr.join(''))
     return
+  }
+
+  const likeFunc = id => {
+    console.log(id)
+    if (GLOBAL.likes.includes(id)) {
+      GLOBAL.likes = GLOBAL.likes.filter(item => item !== id)
+      setLike(colorScheme === 'dark' ? 'white' : 'black')
+    } else {
+      setLike('orange')
+      GLOBAL.likes.push(id)
+    }
   }
 
   return (
@@ -60,7 +92,23 @@ export default function prodDetail () {
           transition={1000}
         />
       </View>
-
+      <ThemedView style={{ flexDirection: 'row' }}>
+        <ThemedText>
+          <Text style={{ fontWeight: 'bold' }}>Price: </Text>
+          {price} {'\u20AC'}
+        </ThemedText>
+        <AntDesign
+          onPress={() => likeFunc(prod.id)}
+          name='hearto'
+          size={24}
+          color={like}
+          style={{ textAlign: 'right', marginLeft: 'auto' }}
+        />
+      </ThemedView>
+      <ThemedText>
+        <Text style={{ fontWeight: 'bold' }}>Brand: </Text>
+        {prod.brandName ? prod.brandName : null}
+      </ThemedText>
       <View
         style={{
           flex: 1,
@@ -87,14 +135,6 @@ export default function prodDetail () {
       </View>
 
       <ThemedText>
-        <Text style={{ fontWeight: 'bold' }}>Brand: </Text>
-        {prod.brandName ? prod.brandName : null}
-      </ThemedText>
-      <ThemedText>
-        <Text style={{ fontWeight: 'bold' }}>Price: </Text>
-        {price} {'\u20AC'}
-      </ThemedText>
-      <ThemedText>
         <Text style={{ fontWeight: 'bold' }}>Descritption: </Text>
         {prod.description ? prod.description : null}
       </ThemedText>
@@ -120,7 +160,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
-  imageG: { minHeight: 100, minWidth: 100, flex: 1, margin: 5, padding: 5, backgroundColor: "#fff" },
+  imageG: {
+    minHeight: 100,
+    minWidth: 100,
+    flex: 1,
+    margin: 5,
+    padding: 5,
+    backgroundColor: '#fff'
+  },
   cont: {
     container: {
       flex: 1,
