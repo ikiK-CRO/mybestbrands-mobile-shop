@@ -21,7 +21,7 @@ import GLOBAL from '@/global.js'
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
   let colorScheme = useColorScheme()
-  const [spinner, setSpinner] = useState("none")
+  const [spinner, setSpinner] = useState('none')
 
   let toast = (color, text) => {
     Toast.show(text, {
@@ -39,7 +39,7 @@ export default function TabTwoScreen () {
   }
 
   useEffect(() => {
-    setSpinner("flex")
+    setSpinner('flex')
     console.log(GLOBAL)
 
     const dataSource =
@@ -62,7 +62,7 @@ export default function TabTwoScreen () {
     setData(data)
     GLOBAL.dataOrginal = data
     toast('green', 'Data fetched!')
-    setSpinner("none")
+    setSpinner('none')
   }
 
   useFocusEffect(
@@ -151,16 +151,10 @@ export default function TabTwoScreen () {
                   <View
                     key={item.id}
                     style={{
+                      ...styles.cardView,
                       marginTop: cardGap,
                       marginLeft: i % 2 !== 0 ? cardGap : 0,
-                      width: cardWidth,
-                      height: 220,
-                      backgroundColor: 'white',
-                      borderRadius: 12,
-                      shadowOpacity: 0.2,
-                      elevation: 2,
-                      justifyContent: 'center',
-                      alignItems: 'center'
+                      width: cardWidth
                     }}
                   >
                     <TouchableOpacity
@@ -185,20 +179,8 @@ export default function TabTwoScreen () {
             : null}
         </ThemedView>
       </ParallaxScrollView>
-      <ThemedView
-        style={{
-          display: spinner,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.95)'
-        }}
-      >
-        <ActivityIndicator size='large' color={colorScheme === 'dark' ? "white" : "white"} />
+      <ThemedView style={{ ...styles.spinnerView, display: spinner }}>
+        <ActivityIndicator size='large' color={'white'} />
       </ThemedView>
     </SafeAreaView>
   )
@@ -236,5 +218,24 @@ const styles = StyleSheet.create({
     minHeight: 120,
     minWidth: 120
     // marginTop: 5
+  },
+  spinnerView: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.95)'
+  },
+  cardView: {
+    height: 220,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    shadowOpacity: 0.2,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
