@@ -17,11 +17,27 @@ import { Image } from 'expo-image'
 import { router, useFocusEffect } from 'expo-router'
 import Toast from 'react-native-root-toast'
 import GLOBAL from '@/global.js'
+import { SearchBar } from '@rneui/themed'
 
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
   let colorScheme = useColorScheme()
   const [spinner, setSpinner] = useState('none')
+  const [search, setSearch] = useState('')
+
+  const updateSearch = search => {
+    setSearch(search)
+    console.log(search)
+
+    let filtered
+    if (GLOBAL.dataFilterd) {
+      filtered = GLOBAL.datF.filter(({ name }) => name.includes(search))
+    } else {
+      filtered = GLOBAL.dataOrginal.filter(({ name }) => name.includes(search))
+    }
+
+    setData(filtered)
+  }
 
   let toast = (color, text) => {
     Toast.show(text, {
@@ -137,7 +153,13 @@ export default function TabTwoScreen () {
             )}
           </View>
         </ThemedView>
-
+        <SearchBar
+          platform='default'
+          placeholder='Search'
+          onChangeText={updateSearch}
+          value={search}
+          lightTheme={colorScheme === 'dark' ? false : true}
+        />
         <ThemedView
           style={{
             flexDirection: 'row',
