@@ -27,7 +27,7 @@ export default function TabTwoScreen () {
 
   const updateSearch = search => {
     setSearch(search)
-    console.log(search)
+    // console.log(search)
 
     let filtered
     if (GLOBAL.dataFilterd) {
