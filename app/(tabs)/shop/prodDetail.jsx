@@ -171,6 +171,12 @@ export default function prodDetail () {
         <Text style={{ fontWeight: 'bold' }}>Descritption: </Text>
         {prod.description ? prod.description : null}
       </ThemedText>
+      <ThemedText>
+        <ThemedText style={{ fontWeight: 'bold'}}>
+        Shipping Info:{' '}
+        </ThemedText>
+        {prod.shippingInfo ? prod.shippingInfo : null}
+      </ThemedText>
     </ParallaxScrollView>
   )
 }
