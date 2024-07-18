@@ -108,10 +108,25 @@ export default function prodDetail () {
           style={{ textAlign: 'right', marginLeft: 'auto' }}
         />
       </ThemedView>
+
       <ThemedText>
         <Text style={{ fontWeight: 'bold' }}>Brand: </Text>
         {prod.brandName ? prod.brandName : null}
       </ThemedText>
+
+      <ThemedText>
+        <ThemedText style={{ fontWeight: 'bold'}}>
+          Materials:{' '}
+        </ThemedText>
+        {prod.materials ? prod.materials : null}
+      </ThemedText>
+      <ThemedText>
+        <ThemedText style={{ fontWeight: 'bold'}}>
+          Categories:{' '}
+        </ThemedText>
+        {prod.categoryTagNames ? prod.categoryTagNames.join(", ") : null}
+      </ThemedText>
+      
       <View>
         <ThemedText style={{ fontWeight: 'bold' }}>SIZES: </ThemedText>
         <ButtonGroup
