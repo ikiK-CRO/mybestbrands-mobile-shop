@@ -96,8 +96,9 @@ export default function Modal () {
   }
 
   const filterData = (type, statement, typeCategory) => {
-
-    const arr = GLOBAL.dataOrginal.filter(({ genders }) => genders.includes(typeCategory));
+    const arr = GLOBAL.dataOrginal.filter(({ genders }) =>
+      genders.includes(typeCategory)
+    )
 
     if (arr.length !== 0) {
       GLOBAL.dataFilterd = true
@@ -145,16 +146,7 @@ export default function Modal () {
           />
         </TouchableOpacity>
         <Divider width={1} color={colorScheme === 'dark' ? 'white' : 'black'} />
-        <ThemedView
-          style={{
-            marginTop: 50,
-            flex: 1,
-            flexDirection: 'row',
-            width: '100%',
-            hight: '100%',
-            alignContent: 'center'
-          }}
-        >
+        <ThemedView style={styles.genderIconsV}>
           <ThemedView style={{ flex: 1, alignItems: 'center' }}>
             <TouchableOpacity onPress={() => handleGender('female')}>
               <FontAwesome name='female' size={60} color={genderFColor} />
@@ -178,5 +170,13 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     textAlign: 'center',
     fontSize: 30
+  },
+  genderIconsV: {
+    marginTop: 50,
+    flex: 1,
+    flexDirection: 'row',
+    width: '100%',
+    hight: '100%',
+    alignContent: 'center'
   }
 })
