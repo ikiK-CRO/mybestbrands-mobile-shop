@@ -96,14 +96,9 @@ export default function Modal () {
   }
 
   const filterData = (type, statement, typeCategory) => {
-    // let arr = []
-    // GLOBAL.dataOrginal.forEach(el => {
-    //   if (el.genders.includes(typeCategory)) {
-    //     arr.push(el)
-    //   }
-    // })
-
-    const arr = GLOBAL.dataOrginal.filter(({ genders }) => genders.includes(typeCategory));
+    const arr = GLOBAL.dataOrginal.filter(({ genders }) =>
+      genders.includes(typeCategory)
+    )
 
     if (arr.length !== 0) {
       GLOBAL.dataFilterd = true
