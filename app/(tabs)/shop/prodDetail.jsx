@@ -18,7 +18,7 @@ import { Image } from 'expo-image'
 import Octicons from '@expo/vector-icons/Octicons'
 import GLOBAL from '@/global.js'
 import { toast, formatPrice } from '@/helpers.js'
-import { ButtonGroup } from '@rneui/themed'
+import { ButtonGroup, AirbnbRating } from '@rneui/themed'
 
 export default function prodDetail () {
   const { obj } = useLocalSearchParams()
@@ -27,7 +27,8 @@ export default function prodDetail () {
 
   const [prod, setProd] = useState('')
   const [like, setLike] = useState()
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndexSize, setSelectedIndexSize] = useState(0)
+  const [selectedIndexColor, setSelectedIndexColor] = useState(0)
 
   useEffect(() => {
     console.log(JSON.parse(obj))
@@ -111,6 +112,9 @@ export default function prodDetail () {
         <ThemedText style={{ fontWeight: 'bold' }}>Materials: </ThemedText>
         {prod.materials ? prod.materials : null}
       </ThemedText>
+      <Collapsible title='Description'>
+        <ThemedText>{prod.description ? prod.description : null}</ThemedText>
+      </Collapsible>
       <ThemedText>
         <ThemedText style={{ fontWeight: 'bold' }}>Categories: </ThemedText>
         {prod.categoryTagNames ? prod.categoryTagNames.join(', ') : null}
@@ -120,17 +124,43 @@ export default function prodDetail () {
         <ThemedText style={{ fontWeight: 'bold' }}>SIZES: </ThemedText>
         <ButtonGroup
           buttons={prod ? prod.sizes.map(x => x.name) : null}
-          selectedIndex={selectedIndex}
+          selectedIndex={selectedIndexSize}
           onPress={value => {
-            setSelectedIndex(value)
+            setSelectedIndexSize(value)
           }}
           containerStyle={{ marginBottom: 20 }}
-          selectedButtonStyle={{
-            // backgroundColor: 'orange',
-            color: 'black'
-          }}
+          selectedButtonStyle={
+            {
+              // backgroundColor: 'orange',
+            }
+          }
         />
       </View>
+
+      <View>
+        <ThemedText style={{ fontWeight: 'bold' }}>COLORS: </ThemedText>
+        <ButtonGroup
+          buttons={prod ? prod.colors : null}
+          selectedIndex={selectedIndexColor}
+          onPress={value => {
+            setSelectedIndexColor(value)
+          }}
+          containerStyle={{ marginBottom: 20, maxWidth: 60 }}
+          selectedButtonStyle={
+            {
+              // backgroundColor: 'orange',
+            }
+          }
+        />
+      </View>
+
+      <AirbnbRating
+        size={20}
+        showRating={false}
+        isDisabled={false}
+        defaultRating={0}
+      />
+
       <View
         style={{
           flex: 1,
@@ -155,10 +185,6 @@ export default function prodDetail () {
             })
           : null}
       </View>
-
-      <Collapsible title='Description'>
-        <ThemedText>{prod.description ? prod.description : null}</ThemedText>
-      </Collapsible>
 
       <Collapsible title='Shipping Info'>
         <ThemedText>{prod.shippingInfo ? prod.shippingInfo : null}</ThemedText>
