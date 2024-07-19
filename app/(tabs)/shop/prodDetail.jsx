@@ -18,7 +18,8 @@ import { Image } from 'expo-image'
 import Octicons from '@expo/vector-icons/Octicons'
 import GLOBAL from '@/global.js'
 import { toast, formatPrice } from '@/helpers.js'
-import { ButtonGroup, AirbnbRating } from '@rneui/themed'
+import { ButtonGroup, AirbnbRating, FAB } from '@rneui/themed'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 
 export default function prodDetail () {
   const { obj } = useLocalSearchParams()
@@ -67,129 +68,158 @@ export default function prodDetail () {
   }
 
   return (
-    <ParallaxScrollView
-      style={styles.cont}
-      headerBackgroundColor={{ light: '#fff', dark: '#fff' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/logo.png')}
-          style={styles.logo}
-        />
-      }
-    >
-      <ThemedText type='title' style={styles.title}>
-        {prod.name ? prod.name : null}
-      </ThemedText>
-      <View style={styles.imageWrapper}>
-        <Image
-          style={styles.image}
-          source={prod.mainImageUrl}
-          placeholder={require('@/assets/images/logo.png')}
-          contentFit='cover'
-          transition={1000}
-        />
-      </View>
-      <ThemedView style={{ flexDirection: 'row' }}>
-        <ThemedText>
-          <Text style={{ fontWeight: 'bold' }}>Price: </Text>
-          {formatPrice(prod.price ? prod.price : '')} {'\u20AC'}
+    <>
+      <ParallaxScrollView
+        style={styles.cont}
+        headerBackgroundColor={{ light: '#fff', dark: '#fff' }}
+        headerImage={
+          <Image
+            source={require('@/assets/images/logo.png')}
+            style={styles.logo}
+          />
+        }
+      >
+        <ThemedText type='title' style={styles.title}>
+          {prod.name ? prod.name : null}
         </ThemedText>
-        <Octicons
-          name='heart-fill'
-          size={24}
-          onPress={() => likeFunc(prod.id)}
-          color={like}
-          style={{ textAlign: 'right', marginLeft: 'auto' }}
-        />
-      </ThemedView>
+        <View style={styles.imageWrapper}>
+          <Image
+            style={styles.image}
+            source={prod.mainImageUrl}
+            placeholder={require('@/assets/images/logo.png')}
+            contentFit='cover'
+            transition={1000}
+          />
+        </View>
+        <ThemedView style={{ flexDirection: 'row' }}>
+          <ThemedText>
+            <Text style={{ fontWeight: 'bold' }}>Price: </Text>
+            {formatPrice(prod.price ? prod.price : '')} {'\u20AC'}
+          </ThemedText>
+          <Octicons
+            name='heart-fill'
+            size={24}
+            onPress={() => likeFunc(prod.id)}
+            color={like}
+            style={{ textAlign: 'right', marginLeft: 'auto' }}
+          />
+        </ThemedView>
 
-      <ThemedText>
-        <Text style={{ fontWeight: 'bold' }}>Brand: </Text>
-        {prod.brandName ? prod.brandName : null}
-      </ThemedText>
+        <ThemedText>
+          <Text style={{ fontWeight: 'bold' }}>Brand: </Text>
+          {prod.brandName ? prod.brandName : null}
+        </ThemedText>
 
-      <ThemedText>
-        <ThemedText style={{ fontWeight: 'bold' }}>Materials: </ThemedText>
-        {prod.materials ? prod.materials : null}
-      </ThemedText>
-      <Collapsible title='Description'>
-        <ThemedText>{prod.description ? prod.description : null}</ThemedText>
-      </Collapsible>
-      <ThemedText>
-        <ThemedText style={{ fontWeight: 'bold' }}>Categories: </ThemedText>
-        {prod.categoryTagNames ? prod.categoryTagNames.join(', ') : null}
-      </ThemedText>
+        <ThemedText>
+          <ThemedText style={{ fontWeight: 'bold' }}>Materials: </ThemedText>
+          {prod.materials ? prod.materials : null}
+        </ThemedText>
+        <Collapsible title='Description'>
+          <ThemedText>{prod.description ? prod.description : null}</ThemedText>
+        </Collapsible>
+        <ThemedText>
+          <ThemedText style={{ fontWeight: 'bold' }}>Categories: </ThemedText>
+          {prod.categoryTagNames ? prod.categoryTagNames.join(', ') : null}
+        </ThemedText>
 
-      <View>
-        <ThemedText style={{ fontWeight: 'bold' }}>SIZES: </ThemedText>
-        <ButtonGroup
-          buttons={prod ? prod.sizes.map(x => x.name) : null}
-          selectedIndex={selectedIndexSize}
-          onPress={value => {
-            setSelectedIndexSize(value)
-          }}
-          containerStyle={{ marginBottom: 20 }}
-          selectedButtonStyle={
-            {
-              // backgroundColor: 'orange',
+        <View>
+          <ThemedText style={{ fontWeight: 'bold' }}>SIZES: </ThemedText>
+          <ButtonGroup
+            buttons={prod ? prod.sizes.map(x => x.name) : null}
+            selectedIndex={selectedIndexSize}
+            onPress={value => {
+              setSelectedIndexSize(value)
+            }}
+            containerStyle={{ marginBottom: 20 }}
+            selectedButtonStyle={
+              {
+                // backgroundColor: 'orange',
+              }
             }
-          }
-        />
-      </View>
+          />
+        </View>
 
-      <View>
-        <ThemedText style={{ fontWeight: 'bold' }}>COLORS: </ThemedText>
-        <ButtonGroup
-          buttons={prod ? prod.colors : null}
-          selectedIndex={selectedIndexColor}
-          onPress={value => {
-            setSelectedIndexColor(value)
-          }}
-          containerStyle={{ marginBottom: 20, maxWidth: 60 }}
-          selectedButtonStyle={
-            {
-              // backgroundColor: 'orange',
+        <View>
+          <ThemedText style={{ fontWeight: 'bold' }}>COLORS: </ThemedText>
+          <ButtonGroup
+            buttons={prod ? prod.colors : null}
+            selectedIndex={selectedIndexColor}
+            onPress={value => {
+              setSelectedIndexColor(value)
+            }}
+            containerStyle={{ marginBottom: 20, maxWidth: 60 }}
+            selectedButtonStyle={
+              {
+                // backgroundColor: 'orange',
+              }
             }
-          }
-        />
-      </View>
+          />
+        </View>
 
-      <AirbnbRating
-        size={20}
-        showRating={false}
-        isDisabled={false}
-        defaultRating={0}
-      />
+        <AirbnbRating
+          size={20}
+          showRating={false}
+          isDisabled={false}
+          defaultRating={0}
+        />
+
+        <View
+          style={{
+            flex: 1,
+            padding: 20,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}
+        >
+          {prod
+            ? prod.additionalImages.map((item, i) => {
+                return (
+                  <Image
+                    key={i}
+                    style={styles.imageG}
+                    source={item}
+                    placeholder={require('@/assets/images/logo.png')}
+                    contentFit='cover'
+                    transition={1000}
+                  />
+                )
+              })
+            : null}
+        </View>
+
+        <Collapsible title='Shipping Info'>
+          <ThemedText>
+            {prod.shippingInfo ? prod.shippingInfo : null}
+          </ThemedText>
+        </Collapsible>
+      </ParallaxScrollView>
 
       <View
         style={{
-          flex: 1,
-          padding: 20,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
+          // borderWidth: 1,
+          position: 'absolute',
+          bottom: 0,
+          alignSelf: 'flex-end'
         }}
       >
-        {prod
-          ? prod.additionalImages.map((item, i) => {
-              return (
-                <Image
-                  key={i}
-                  style={styles.imageG}
-                  source={item}
-                  placeholder={require('@/assets/images/logo.png')}
-                  contentFit='cover'
-                  transition={1000}
-                />
-              )
-            })
-          : null}
+        <FAB
+          // title='Create'
+          size='large'
+          style={{ margin: 15 }}
+          iconPosition='right'
+          color={colorScheme === 'dark' ? 'white' : 'black'}
+          onPress={() => toast('green', 'Added to cart')}
+          icon={
+            <FontAwesome5
+              name='cart-plus'
+              size={24}
+              color={colorScheme === 'dark' ? 'black' : 'white'}
+            />
+          }
+        />
       </View>
-
-      <Collapsible title='Shipping Info'>
-        <ThemedText>{prod.shippingInfo ? prod.shippingInfo : null}</ThemedText>
-      </Collapsible>
-    </ParallaxScrollView>
+    </>
   )
 }
 
