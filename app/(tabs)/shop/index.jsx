@@ -91,7 +91,6 @@ export default function TabTwoScreen () {
       }
     })
 
-
   return (
     <SafeAreaView style={styles.container}>
       <ParallaxScrollView
@@ -142,6 +141,8 @@ export default function TabTwoScreen () {
           onChangeText={updateSearch}
           value={search}
           lightTheme={colorScheme === 'dark' ? false : true}
+          containerStyle={styles.SearchBar}
+          inputContainerStyle={{ borderRadius: 10 }}
         />
         <ThemedView
           style={{
@@ -237,10 +238,16 @@ const styles = StyleSheet.create({
   cardView: {
     height: 220,
     backgroundColor: 'white',
-    borderRadius: 12,
+    borderRadius: 10,
     shadowOpacity: 0.2,
     elevation: 2,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  SearchBar: {
+    borderRadius: 10,
+    padding: 0,
+    shadowOpacity: 0.2,
+    elevation: 2
   }
 })
