@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   useColorScheme,
   ActivityIndicator,
-  Animated
+  Animated,
+  LogBox
 } from 'react-native'
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -18,7 +19,7 @@ import { Image } from 'expo-image'
 import { router, useFocusEffect } from 'expo-router'
 import GLOBAL from '@/global.js'
 import { toast, formatPrice } from '@/helpers.js'
-import { SearchBar } from '@rneui/themed'
+import { SearchBar, AirbnbRating } from '@rneui/themed'
 
 export default function TabTwoScreen () {
   const [data, setData] = useState([])
@@ -27,6 +28,7 @@ export default function TabTwoScreen () {
   const [search, setSearch] = useState('')
   const [fadeAnim] = useState(new Animated.Value(0))
   const [displaySbar, setDisplaySbar] = useState('none')
+  // LogBox.ignoreAllLogs(true)
 
   const updateSearch = search => {
     setSearch(search)
@@ -208,6 +210,7 @@ export default function TabTwoScreen () {
                       width: cardWidth
                     }}
                   >
+                    
                     <TouchableOpacity
                       style={styles.button}
                       onPress={() => onPressItem(item)}
@@ -223,6 +226,7 @@ export default function TabTwoScreen () {
                       <Text style={{ paddingLeft: 5 }}>
                         {formatPrice(item.price)} {'\u20AC'}
                       </Text>
+                      <AirbnbRating size={10} showRating={false} isDisabled={true} defaultRating={0}/>
                     </TouchableOpacity>
                   </View>
                 )
