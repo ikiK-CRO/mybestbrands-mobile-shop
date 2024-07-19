@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   useColorScheme,
   ActivityIndicator,
-  Animated
+  Animated,
+  LogBox
 } from 'react-native'
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -27,6 +28,7 @@ export default function TabTwoScreen () {
   const [search, setSearch] = useState('')
   const [fadeAnim] = useState(new Animated.Value(0))
   const [displaySbar, setDisplaySbar] = useState('none')
+  // LogBox.ignoreAllLogs(true)
 
   const updateSearch = search => {
     setSearch(search)

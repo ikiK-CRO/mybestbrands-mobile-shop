@@ -6,7 +6,8 @@ import {
   View,
   Dimensions,
   Modal,
-  useColorScheme
+  useColorScheme,
+  LogBox
 } from 'react-native'
 import { router, useLocalSearchParams, useFocusEffect } from 'expo-router'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -25,7 +26,7 @@ export default function prodDetail () {
   const { obj } = useLocalSearchParams()
   const product = JSON.parse(obj)
   let colorScheme = useColorScheme()
-
+  // LogBox.ignoreAllLogs(true)
   const [prod, setProd] = useState('')
   const [like, setLike] = useState()
   const [selectedIndexSize, setSelectedIndexSize] = useState(0)
