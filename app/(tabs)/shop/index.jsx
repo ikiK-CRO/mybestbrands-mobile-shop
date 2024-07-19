@@ -7,7 +7,8 @@ import {
   Text,
   TouchableOpacity,
   useColorScheme,
-  ActivityIndicator
+  ActivityIndicator,
+  Animated
 } from 'react-native'
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -24,6 +25,8 @@ export default function TabTwoScreen () {
   let colorScheme = useColorScheme()
   const [spinner, setSpinner] = useState('none')
   const [search, setSearch] = useState('')
+  const [fadeAnim] = useState(new Animated.Value(0))
+  const [displaySbar, setDisplaySbar] = useState('none')
 
   const updateSearch = search => {
     setSearch(search)
@@ -91,6 +94,26 @@ export default function TabTwoScreen () {
       }
     })
 
+  const sBarAnimate = () => {
+    if (displaySbar !== 'flex') {
+      console.log(true)
+      setDisplaySbar('flex')
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true
+      }).start()
+    } else {
+      console.log(true)
+      setDisplaySbar('none')
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true
+      }).start()
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ParallaxScrollView
@@ -102,20 +125,31 @@ export default function TabTwoScreen () {
           />
         }
       >
-        <ThemedView style={{ flex: 1, flexDirection: 'row' }}>
+        <ThemedView
+          style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}
+        >
           <View style={{ flex: 2 }}>
+            <Ionicons
+              name='search-circle-sharp'
+              size={28}
+              color={colorScheme === 'dark' ? 'white' : 'black'}
+              onPress={() => sBarAnimate()}
+            />
+          </View>
+
+          <View style={{ flex: 20 }}>
             <ThemedText type='title' style={styles.title}>
               PRODUCT LIST
             </ThemedText>
           </View>
 
-          <View style={{ lex: 6 }}>
+          <View style={{ flex: 2 }}>
             {colorScheme === 'dark' ? (
               <Ionicons
                 name='settings'
                 size={24}
                 color={GLOBAL.dataFilterd === true ? 'orange' : 'white'}
-                onPress={data =>
+                onPress={() =>
                   router.navigate({
                     pathname: 'modal'
                   })
@@ -126,7 +160,7 @@ export default function TabTwoScreen () {
                 name='settings'
                 size={24}
                 color={GLOBAL.dataFilterd === true ? 'orange' : 'black'}
-                onPress={data =>
+                onPress={() =>
                   router.navigate({
                     pathname: 'modal'
                   })
@@ -135,15 +169,26 @@ export default function TabTwoScreen () {
             )}
           </View>
         </ThemedView>
-        <SearchBar
-          platform='default'
-          placeholder='Search'
-          onChangeText={updateSearch}
-          value={search}
-          lightTheme={colorScheme === 'dark' ? false : true}
-          containerStyle={styles.SearchBar}
-          inputContainerStyle={{ borderRadius: 10 }}
-        />
+
+        <Animated.View
+          style={{
+            opacity: fadeAnim,
+            display: displaySbar
+          }}
+        >
+          <SearchBar
+            platform='default'
+            placeholder='Search'
+            onChangeText={updateSearch}
+            value={search}
+            lightTheme={colorScheme === 'dark' ? false : true}
+            containerStyle={{
+              ...styles.SearchBar
+            }}
+            inputContainerStyle={{ borderRadius: 10 }}
+          />
+        </Animated.View>
+
         <ThemedView
           style={{
             flexDirection: 'row',
