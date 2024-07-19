@@ -12,6 +12,7 @@ import { router, useLocalSearchParams, useFocusEffect } from 'expo-router'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
+import { Collapsible } from '@/components/Collapsible'
 import React, { useEffect, useState, useCallback } from 'react'
 import { Image } from 'expo-image'
 import Octicons from '@expo/vector-icons/Octicons'
@@ -25,10 +26,8 @@ export default function prodDetail () {
   let colorScheme = useColorScheme()
 
   const [prod, setProd] = useState('')
-  const [price, setPrice] = useState('')
   const [like, setLike] = useState()
   const [selectedIndex, setSelectedIndex] = useState(0)
-  // const [selectedIndexes, setSelectedIndexes] = useState([])
 
   useEffect(() => {
     console.log(JSON.parse(obj))
@@ -157,14 +156,13 @@ export default function prodDetail () {
           : null}
       </View>
 
-      <ThemedText>
-        <Text style={{ fontWeight: 'bold' }}>Descritption: </Text>
-        {prod.description ? prod.description : null}
-      </ThemedText>
-      <ThemedText>
-        <ThemedText style={{ fontWeight: 'bold' }}>Shipping Info: </ThemedText>
-        {prod.shippingInfo ? prod.shippingInfo : null}
-      </ThemedText>
+      <Collapsible title='Description'>
+        <ThemedText>{prod.description ? prod.description : null}</ThemedText>
+      </Collapsible>
+
+      <Collapsible title='Shipping Info'>
+        <ThemedText>{prod.shippingInfo ? prod.shippingInfo : null}</ThemedText>
+      </Collapsible>
     </ParallaxScrollView>
   )
 }
