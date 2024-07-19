@@ -7,7 +7,8 @@ import {
   Text,
   TouchableOpacity,
   useColorScheme,
-  ActivityIndicator
+  ActivityIndicator,
+  Animated
 } from 'react-native'
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import ParallaxScrollView from '@/components/ParallaxScrollView'
@@ -15,8 +16,8 @@ import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Image } from 'expo-image'
 import { router, useFocusEffect } from 'expo-router'
-import Toast from 'react-native-root-toast'
 import GLOBAL from '@/global.js'
+import { toast, formatPrice } from '@/helpers.js'
 import { SearchBar } from '@rneui/themed'
 
 export default function TabTwoScreen () {
@@ -24,6 +25,8 @@ export default function TabTwoScreen () {
   let colorScheme = useColorScheme()
   const [spinner, setSpinner] = useState('none')
   const [search, setSearch] = useState('')
+  const [fadeAnim] = useState(new Animated.Value(0))
+  const [displaySbar, setDisplaySbar] = useState('none')
 
   const updateSearch = search => {
     setSearch(search)
@@ -39,27 +42,15 @@ export default function TabTwoScreen () {
     setData(filtered)
   }
 
-  let toast = (color, text) => {
-    Toast.show(text, {
-      duration: 5000,
-      position: Toast.positions.TOP,
-      backgroundColor: color,
-      shadowColor: 'black',
-      containerStyle: {
-        marginTop: 20,
-        marginStart: '60%',
-        minWidth: 150,
-        minHeight: 40
-      }
-    })
-  }
-
   useEffect(() => {
     setSpinner('flex')
     console.log(GLOBAL)
 
     const dataSource =
       'https://api.jsonsilo.com/public/a597ee63-6f5a-4f5d-b70e-338b22e45ee0'
+
+    // for testing
+    // const dataSource = null
 
     fetch(dataSource)
       .then(response => response.json())
@@ -103,10 +94,24 @@ export default function TabTwoScreen () {
       }
     })
 
-  const formatPrice = price => {
-    let arr = price.toString().split('')
-    arr.splice(-2, 0, ',')
-    return arr.join('')
+  const sBarAnimate = () => {
+    if (displaySbar !== 'flex') {
+      console.log(true)
+      setDisplaySbar('flex')
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true
+      }).start()
+    } else {
+      console.log(true)
+      setDisplaySbar('none')
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true
+      }).start()
+    }
   }
 
   return (
@@ -120,20 +125,31 @@ export default function TabTwoScreen () {
           />
         }
       >
-        <ThemedView style={{ flex: 1, flexDirection: 'row' }}>
+        <ThemedView
+          style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}
+        >
           <View style={{ flex: 2 }}>
+            <Ionicons
+              name='search-circle-sharp'
+              size={28}
+              color={colorScheme === 'dark' ? 'white' : 'black'}
+              onPress={() => sBarAnimate()}
+            />
+          </View>
+
+          <View style={{ flex: 20 }}>
             <ThemedText type='title' style={styles.title}>
               PRODUCT LIST
             </ThemedText>
           </View>
 
-          <View style={{ lex: 6 }}>
+          <View style={{ flex: 2 }}>
             {colorScheme === 'dark' ? (
               <Ionicons
                 name='settings'
                 size={24}
                 color={GLOBAL.dataFilterd === true ? 'orange' : 'white'}
-                onPress={data =>
+                onPress={() =>
                   router.navigate({
                     pathname: 'modal'
                   })
@@ -144,7 +160,7 @@ export default function TabTwoScreen () {
                 name='settings'
                 size={24}
                 color={GLOBAL.dataFilterd === true ? 'orange' : 'black'}
-                onPress={data =>
+                onPress={() =>
                   router.navigate({
                     pathname: 'modal'
                   })
@@ -153,13 +169,26 @@ export default function TabTwoScreen () {
             )}
           </View>
         </ThemedView>
-        <SearchBar
-          platform='default'
-          placeholder='Search'
-          onChangeText={updateSearch}
-          value={search}
-          lightTheme={colorScheme === 'dark' ? false : true}
-        />
+
+        <Animated.View
+          style={{
+            opacity: fadeAnim,
+            display: displaySbar
+          }}
+        >
+          <SearchBar
+            platform='default'
+            placeholder='Search'
+            onChangeText={updateSearch}
+            value={search}
+            lightTheme={colorScheme === 'dark' ? false : true}
+            containerStyle={{
+              ...styles.SearchBar
+            }}
+            inputContainerStyle={{ borderRadius: 10 }}
+          />
+        </Animated.View>
+
         <ThemedView
           style={{
             flexDirection: 'row',
@@ -254,10 +283,16 @@ const styles = StyleSheet.create({
   cardView: {
     height: 220,
     backgroundColor: 'white',
-    borderRadius: 12,
+    borderRadius: 10,
     shadowOpacity: 0.2,
     elevation: 2,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  SearchBar: {
+    borderRadius: 10,
+    padding: 0,
+    shadowOpacity: 0.2,
+    elevation: 2
   }
 })
