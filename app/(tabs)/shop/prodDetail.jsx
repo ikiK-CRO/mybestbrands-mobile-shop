@@ -16,6 +16,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { Image } from 'expo-image'
 import Octicons from '@expo/vector-icons/Octicons'
 import GLOBAL from '@/global.js'
+import { toast, formatPrice } from '@/helpers.js'
 import { ButtonGroup } from '@rneui/themed'
 
 export default function prodDetail () {
@@ -54,13 +55,6 @@ export default function prodDetail () {
     }, [product])
   )
 
-  const formatPrice = price => {
-    let arr = price.toString().split('')
-    arr.splice(-2, 0, ',')
-    setPrice(arr.join(''))
-    return
-  }
-
   const likeFunc = id => {
     // console.log(id)
     if (GLOBAL.likes.includes(id)) {
@@ -98,7 +92,7 @@ export default function prodDetail () {
       <ThemedView style={{ flexDirection: 'row' }}>
         <ThemedText>
           <Text style={{ fontWeight: 'bold' }}>Price: </Text>
-          {price} {'\u20AC'}
+          {formatPrice(prod.price ? prod.price : '')} {'\u20AC'}
         </ThemedText>
         <Octicons
           name='heart-fill'
@@ -115,18 +109,14 @@ export default function prodDetail () {
       </ThemedText>
 
       <ThemedText>
-        <ThemedText style={{ fontWeight: 'bold'}}>
-          Materials:{' '}
-        </ThemedText>
+        <ThemedText style={{ fontWeight: 'bold' }}>Materials: </ThemedText>
         {prod.materials ? prod.materials : null}
       </ThemedText>
       <ThemedText>
-        <ThemedText style={{ fontWeight: 'bold'}}>
-          Categories:{' '}
-        </ThemedText>
-        {prod.categoryTagNames ? prod.categoryTagNames.join(", ") : null}
+        <ThemedText style={{ fontWeight: 'bold' }}>Categories: </ThemedText>
+        {prod.categoryTagNames ? prod.categoryTagNames.join(', ') : null}
       </ThemedText>
-      
+
       <View>
         <ThemedText style={{ fontWeight: 'bold' }}>SIZES: </ThemedText>
         <ButtonGroup
@@ -172,9 +162,7 @@ export default function prodDetail () {
         {prod.description ? prod.description : null}
       </ThemedText>
       <ThemedText>
-        <ThemedText style={{ fontWeight: 'bold'}}>
-        Shipping Info:{' '}
-        </ThemedText>
+        <ThemedText style={{ fontWeight: 'bold' }}>Shipping Info: </ThemedText>
         {prod.shippingInfo ? prod.shippingInfo : null}
       </ThemedText>
     </ParallaxScrollView>

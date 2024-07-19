@@ -15,8 +15,8 @@ import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
 import { Image } from 'expo-image'
 import { router, useFocusEffect } from 'expo-router'
-import Toast from 'react-native-root-toast'
 import GLOBAL from '@/global.js'
+import { toast, formatPrice } from '@/helpers.js'
 import { SearchBar } from '@rneui/themed'
 
 export default function TabTwoScreen () {
@@ -39,27 +39,15 @@ export default function TabTwoScreen () {
     setData(filtered)
   }
 
-  let toast = (color, text) => {
-    Toast.show(text, {
-      duration: 5000,
-      position: Toast.positions.TOP,
-      backgroundColor: color,
-      shadowColor: 'black',
-      containerStyle: {
-        marginTop: 20,
-        marginStart: '60%',
-        minWidth: 150,
-        minHeight: 40
-      }
-    })
-  }
-
   useEffect(() => {
     setSpinner('flex')
     console.log(GLOBAL)
 
     const dataSource =
       'https://api.jsonsilo.com/public/a597ee63-6f5a-4f5d-b70e-338b22e45ee0'
+
+    // for testing
+    // const dataSource = null
 
     fetch(dataSource)
       .then(response => response.json())
@@ -103,11 +91,6 @@ export default function TabTwoScreen () {
       }
     })
 
-  const formatPrice = price => {
-    let arr = price.toString().split('')
-    arr.splice(-2, 0, ',')
-    return arr.join('')
-  }
 
   return (
     <SafeAreaView style={styles.container}>

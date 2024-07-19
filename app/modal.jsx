@@ -11,30 +11,15 @@ import { useNavigation } from 'expo-router'
 import { ThemedView } from '@/components/ThemedView'
 import { ThemedText } from '@/components/ThemedText'
 import GLOBAL from '@/global.js'
+import { toast } from '@/helpers.js'
 import React, { useState, useEffect, useCallback } from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import Toast from 'react-native-root-toast'
 import { Divider } from '@rneui/themed'
 
 export default function Modal () {
   let colorScheme = useColorScheme()
   const [genderFColor, setFGenderColor] = useState('')
   const [genderMColor, setMGenderColor] = useState('')
-
-  let toast = (color, text) => {
-    Toast.show(text, {
-      duration: 5000,
-      position: Toast.positions.TOP,
-      backgroundColor: color,
-      shadowColor: 'black',
-      containerStyle: {
-        marginTop: 80,
-        marginStart: '60%',
-        minWidth: 150,
-        minHeight: 40
-      }
-    })
-  }
 
   useEffect(() => {
     colorScheme === 'dark'
